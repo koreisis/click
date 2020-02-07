@@ -551,7 +551,7 @@ AggregateIPFlows::handle_packet(Packet *p)
 }
 
 void
-AggregateIPFlows::push(int, Packet *p)
+AggregateIPFlows::push(int port, Packet *p)
 {
     int action = handle_packet(p);
 
@@ -560,9 +560,9 @@ AggregateIPFlows::push(int, Packet *p)
 	reap();
 
     if (action == ACT_EMIT)
-	output(0).push(p);
+	output(port).push(p);
     else if (action == ACT_DROP)
-	checked_output_push(1, p);
+	checked_output_push(2, p);
 }
 
 Packet *
